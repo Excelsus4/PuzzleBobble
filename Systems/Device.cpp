@@ -15,7 +15,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 }
 
 HWND Hwnd = NULL;
-wstring Title = L"Draw Sprite";
+wstring Title = L"Puzzle Bobble";
 
 IDXGISwapChain* SwapChain;
 ID3D11Device* Device;

@@ -9,7 +9,6 @@ public:
 	void Render();
 
 private:
-	Sprite* cloud[2];
-	Sprite* bush[2];
-	Sprite* tile[2];
+	static const int num = 5;
+	Sprite* backgroundObject[num];
 };

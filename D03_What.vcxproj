@@ -146,6 +146,7 @@
   <ItemGroup>
     <ClCompile Include="Draws\Rect.cpp" />
     <ClCompile Include="Draws\Sprite.cpp" />
+    <ClCompile Include="Hex\Hex.cpp" />
     <ClCompile Include="Objects\Background.cpp" />
     <ClCompile Include="Objects\Bullet.cpp" />
     <ClCompile Include="Renders\Shader.cpp" />
@@ -165,6 +166,7 @@
   <ItemGroup>
     <ClInclude Include="Draws\Rect.h" />
     <ClInclude Include="Draws\Sprite.h" />
+    <ClInclude Include="Hex\Hex.h" />
     <ClInclude Include="Objects\Background.h" />
     <ClInclude Include="Objects\Bullet.h" />
     <ClInclude Include="Renders\Shader.h" />

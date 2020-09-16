@@ -41,8 +41,8 @@ using namespace std;
 #define SAFE_DELETE(p){ if(p){delete (p); (p) = NULL;}}
 #define SAFE_DELETE_ARRAY(p){ if(p){delete[] (p); (p) = NULL;}}
 
-const UINT Width = 1024;
-const UINT Height = 768;
+const UINT Width = 960;
+const UINT Height = 672;
 
 const wstring Textures = L"../_Textures/";
 const wstring Shaders = L"../_Shaders/";

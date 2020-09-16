@@ -1,16 +1,19 @@
 #include "stdafx.h"
 #include "Bullet.h"
 
-Bullet::Bullet(wstring shaderFile, D3DXVECTOR2 start, float angle, float speed)
+Bullet::Bullet(wstring shaderFile, D3DXVECTOR2 start, float angle, float speed, int color) :
+	color(color)
 {
-	sprite = new Sprite(Textures + L"Bullets.png", shaderFile, 173, 155, 183, 167);
+	float YIndex = 33 * (color % 4);
+	float XIndex = 554 * (color / 4);
+	sprite = new Sprite(Textures + L"PuzzleBobble/PuzzleBobble.png", shaderFile, 1 + XIndex, 1854 + YIndex, 17 + XIndex, 1870 + YIndex);
 
 	position = start;
 	sprite->Position(position);
 
 	float radian = Math::ToRadian(angle);
-	velocity.x = cosf(radian);
-	velocity.y = sinf(radian);
+	velocity.x = sinf(radian);
+	velocity.y = cosf(radian);
 	velocity *= speed;
 }
 
@@ -22,14 +25,10 @@ Bullet::~Bullet()
 
 void Bullet::Update(D3DXMATRIX & V, D3DXMATRIX & P)
 {
-	if (position.x < 0)
+	if (position.x < 104)
 		Reflection(D3DXVECTOR2(1, 0));
-	if (position.x > Width)
+	if (position.x > 216)
 		Reflection(D3DXVECTOR2(-1, 0));
-	if (position.y < 0)
-		Reflection(D3DXVECTOR2(0, 1));
-	if (position.y > Height)
-		Reflection(D3DXVECTOR2(0, -1));
 
 	position += velocity;
 
@@ -40,6 +39,21 @@ void Bullet::Update(D3DXMATRIX & V, D3DXMATRIX & P)
 void Bullet::Reflection(const D3DXVECTOR2 & n)
 {
 	velocity = velocity - 2 * D3DXVec2Dot(&velocity, &n) * n;
+}
+
+void Bullet::Position(const float & x, const float & y)
+{
+	Position(D3DXVECTOR2(x, y));
+}
+
+void Bullet::Position(const D3DXVECTOR2 & pos)
+{
+	position = pos;
+}
+
+void Bullet::Stop()
+{
+	velocity = D3DXVECTOR2(0, 0);
 }
 
 void Bullet::Render()

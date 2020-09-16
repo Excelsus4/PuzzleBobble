@@ -3,82 +3,48 @@
 
 Background::Background(wstring shaderFile)
 {
-	wstring textureFile = L"";
-	textureFile = L"../_Textures/Mario/Cloud.png";
-	cloud[0] = new Sprite(textureFile, shaderFile, 126, 128);
-	cloud[1] = new Sprite(textureFile, shaderFile, 144, 0, 336, 128);
+	wstring backgroundFile = Textures + L"PuzzleBobble/Background.png";
+	wstring spriteFile = Textures + L"PuzzleBobble/PuzzleBobble.png";
 
-	textureFile = L"../_Textures/Mario/Bush.png";
-	bush[0] = new Sprite(textureFile, shaderFile);
+	// Background
+	backgroundObject[0] = new Sprite(backgroundFile, shaderFile, 16, 16, 336, 240);
+	backgroundObject[0]->Position(160, 112);
 
-	textureFile = L"../_Textures/Mario/Bush2.png";
-	bush[1] = new Sprite(textureFile, shaderFile);
+	// Floor
+	backgroundObject[1] = new Sprite(backgroundFile, shaderFile, 16, 248, 336, 256);
+	backgroundObject[1]->Position(160, 4);
 
-	textureFile = L"../_Textures/Mario/Tile.png";
-	tile[0] = new Sprite(textureFile, shaderFile);
-	tile[1] = new Sprite(textureFile, shaderFile, 0, 66, 0, 0);
+	// Line
+	backgroundObject[2] = new Sprite(spriteFile, shaderFile, 581, 2185, 709, 2201);
+	backgroundObject[2]->Position(160, 43);
 
+	// Machine
+	backgroundObject[3] = new Sprite(spriteFile, shaderFile, 1, 1805, 65, 1845);
+	backgroundObject[3]->Position(160, 28);
+
+	// Bag
+	backgroundObject[4] = new Sprite(spriteFile, shaderFile, 781, 1813, 845, 1845);
+	backgroundObject[4]->Position(110, 24);
 }
 
 Background::~Background()
 {
-	SAFE_DELETE(cloud[0]);
-	SAFE_DELETE(cloud[1]);
-
-	SAFE_DELETE(bush[0]);
-	SAFE_DELETE(bush[1]);
-
-	SAFE_DELETE(tile[0]);
-	SAFE_DELETE(tile[1]);
+	for (int i = 0; i < num; i++) {
+		SAFE_DELETE(backgroundObject[i]);
+	}
 }
 
 void Background::Update(D3DXMATRIX & V, D3DXMATRIX & P)
 {
-	cloud[0]->Update(V, P);
-	cloud[1]->Update(V, P);
-
-	bush[0]->Update(V, P);
-	bush[1]->Update(V, P);
-
-	tile[0]->Update(V, P);
-	tile[1]->Update(V, P);
+	for (int i = 0; i < num; i++) {
+		backgroundObject[i]->Update(V,P);
+	}
 }
 
 void Background::Render()
 {
-	cloud[0]->Position(200, 420);
-	cloud[0]->Render();
-
-	cloud[0]->Position(40, 420);
-	cloud[0]->Render();
-
-	cloud[1]->Position(500, 420);
-	cloud[1]->Render();
-
-	bush[0]->Position(100, 128);
-	bush[0]->Render();
-
-	bush[0]->Position(650, 128);
-	bush[0]->Render();
-
-	bush[1]->Position(-50, 170);
-	bush[1]->Render();
-
-	bush[1]->Position(300, 170);
-	bush[1]->Render();
-
-	bush[1]->Position(600, 170);
-	bush[1]->Render();
-
-	float tileWidth = tile[0]->Scale().x;
-	float tileWidth2 = tile[1]->Scale().x;
-
-	for (int i = 0; i < 7; i++) {
-		tile[0]->Position((float)i*tileWidth, 45);
-		tile[0]->Render();
-
-		tile[1]->Position((float)i*tileWidth2, 25);
-		tile[1]->Render();
+	for (int i = 0; i < num; i++) {
+		backgroundObject[i]->Render();
 	}
 }
 

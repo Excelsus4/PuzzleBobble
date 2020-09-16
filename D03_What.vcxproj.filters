@@ -39,6 +39,9 @@
     <ClCompile Include="Objects\Bullet.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Hex\Hex.cpp">
+      <Filter>Hex</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Systems\Keyboard.h">
@@ -78,6 +81,9 @@
     <ClInclude Include="Objects\Bullet.h">
       <Filter>Objects</Filter>
     </ClInclude>
+    <ClInclude Include="Hex\Hex.h">
+      <Filter>Hex</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Systems">
@@ -94,6 +100,9 @@
     </Filter>
     <Filter Include="Objects">
       <UniqueIdentifier>{7474e0b7-ae15-41b7-8f0c-c1dade6a655d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hex">
+      <UniqueIdentifier>{4a786e91-31dd-45aa-a7c6-8151f2af1506}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

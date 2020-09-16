@@ -19,6 +19,9 @@ public:
 	void Scale(D3DXVECTOR2& vec);
 	D3DXVECTOR2 Scale() const { return scale; }
 
+	void Rotation(float r);
+	float Rotation() const;
+
 private:
 	void Initialize(wstring spriteFile, wstring shaderFile, float startX, float startY, float endX, float endY);
 	void UpdateWorld();
@@ -31,6 +34,7 @@ private:
 
 	D3DXVECTOR2 position;
 	D3DXVECTOR2 scale;
+	float rotation;
 
 	ID3D11ShaderResourceView* srv;
 
