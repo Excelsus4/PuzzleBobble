@@ -18,6 +18,7 @@ Hex::Hex(Hex * n9, Hex * n11, Hex * n1, const D3DXVECTOR2& pos) :
 	neighbor[seven] = nullptr;
 
 	bullet = nullptr;
+	scanIndex = 0;
 }
 
 Hex::~Hex()
@@ -49,6 +50,11 @@ void Hex::SetBullet(Bullet * b)
 	b->Stop();
 }
 
+void Hex::DestroyBullet()
+{
+	SAFE_DELETE(bullet);
+}
+
 bool Hex::CollisionCheck(const Bullet & b)
 {
 	if (bullet) {
@@ -66,7 +72,8 @@ bool Hex::CollisionCheck(const Bullet & b)
 // HexMap
 //-----------------------------------------------------------------------------
 
-HexMap::HexMap(const int& width, const int& height, const D3DXVECTOR2& pos, const D3DXVECTOR2& gridSize)
+HexMap::HexMap(const int& width, const int& height, const D3DXVECTOR2& pos, const D3DXVECTOR2& gridSize):
+	scanIndex(0)
 {
 	Hex* newHex;
 	Hex* lastHex;
@@ -140,7 +147,7 @@ bool HexMap::isFit(const Bullet * b) const
 	return false;
 }
 
-void HexMap::Fit(Bullet * b)
+Hex* HexMap::Fit(Bullet * b)
 {
 	D3DXVECTOR2 pos = b->Position();
 	float d = INFINITY;
@@ -163,4 +170,74 @@ void HexMap::Fit(Bullet * b)
 	}
 	
 	lastAnswer->SetBullet(b);
+	return lastAnswer;
+}
+
+void HexMap::StartScan()
+{
+	++scanIndex;
+}
+
+int HexMap::Scan(Hex * start, const int& color)
+{
+	// This indicates this hex is already scanned by other route
+	if (start->scanIndex >= scanIndex)
+		return 0;
+
+	// Update scan Index for this hex node
+	start->scanIndex = scanIndex;
+
+	if (start->bullet) {
+		// Bullet exist in start
+		if (start->bullet->Color() == color) {
+			//Bullet is same color
+			int sum = 0;
+			// Scan through the hexmap from startpoint
+			for (int i = 0; i < 6; i++) {
+				if (start->neighbor[i]) {
+					sum += Scan(start->neighbor[i], color);
+				}
+			}
+			// Return sum
+			return sum + 1;
+		}
+		else {
+			//Bullet is different color
+			return 0;
+		}
+	}
+	else {
+		// No Bullet in start
+		return 0;
+	}
+	
+	assert(false);
+	return 0;
+}
+
+void HexMap::Destroy(Hex * start, const int & color)
+{
+	if (start->bullet) {
+		// Bullet exist in start
+		if (start->bullet->Color() == color) {
+			start->DestroyBullet();
+
+			// Scan through the hexmap from startpoint
+			for (int i = 0; i < 6; i++) {
+				if (start->neighbor[i]) {
+					Destroy(start->neighbor[i], color);
+				}
+			}
+			// Return
+			return;
+		}
+		else {
+			//Bullet is different color
+			return;
+		}
+	}
+	else {
+		// No Bullet in start
+		return;
+	}
 }

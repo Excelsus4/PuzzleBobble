@@ -10,7 +10,7 @@ vector<Bullet*> bullets;
 Sprite* arrow;
 int nextnextColor;
 int nextColor;
-float bulletSpeed = 0.2f;
+float bulletSpeed = 0.15f;
 float arrowSpeed = 0.03f;
 
 Bullet* outbag[8];
@@ -101,7 +101,13 @@ void Update() {
 
 	for (auto iter = bullets.begin(); iter != bullets.end(); ) {
 		if (hmap->isFit(*iter)) {
-			hmap->Fit(*iter);
+			Hex* newBullet = hmap->Fit(*iter);
+			hmap->StartScan();
+			int sameColor = hmap->Scan(newBullet, newBullet->bullet->Color());
+			if (sameColor >= 3) {
+				hmap->Destroy(newBullet, newBullet->bullet->Color());
+			}
+			
 			auto lazy = iter;
 			iter = bullets.erase(lazy);
 		}

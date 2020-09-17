@@ -18,13 +18,14 @@ public:
 	Hex* neighbor[6];
 
 	D3DXVECTOR2 position;
-
+	UINT scanIndex;
 public:
 	void Update(D3DXMATRIX& V, D3DXMATRIX& P);
 	void Render();
 
 public:
 	void SetBullet(Bullet* b);
+	void DestroyBullet();
 	bool CollisionCheck(const Bullet& b);
 };
 
@@ -41,9 +42,15 @@ public:
 	void Render();
 
 private:
+	UINT scanIndex;
 	vector<Hex*> left;
 
 public:
 	bool isFit(const Bullet* b) const;
-	void Fit(Bullet* b);
+	Hex* Fit(Bullet* b);
+
+	void StartScan();
+	int Scan(Hex* start, const int& color);
+	
+	void Destroy(Hex* start, const int& color);
 };

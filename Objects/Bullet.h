@@ -14,6 +14,8 @@ public:
 	void Position(const float& x, const float& y);
 	void Position(const D3DXVECTOR2& pos);
 
+	int Color() const { return color; }
+
 	void Stop();
 private:
 	D3DXVECTOR2 velocity;
