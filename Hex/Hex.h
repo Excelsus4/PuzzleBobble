@@ -1,5 +1,6 @@
 #pragma once
 #include "Objects/Bullet.h"
+#include "Objects/Pop.h"
 
 class Hex {
 public:
@@ -25,7 +26,7 @@ public:
 
 public:
 	void SetBullet(Bullet* b);
-	void DestroyBullet();
+	void DestroyBullet(vector<Pop*>* popAnim);
 	bool CollisionCheck(const Bullet& b);
 
 	void SetIndexToNearBullets(const UINT& index);
@@ -40,12 +41,15 @@ public:
 	~HexMap();
 
 public:
+	void SetPopAnim(vector<Pop*>* popAnpim);
+
 	void Update(D3DXMATRIX& V, D3DXMATRIX& P);
 	void Render();
 
 private:
 	UINT scanIndex;
 	vector<Hex*> left;
+	vector<Pop*>* popAnim;
 
 public:
 	bool isFit(const Bullet* b) const;

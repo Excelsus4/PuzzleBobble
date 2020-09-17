@@ -3,10 +3,12 @@
 #include "./Objects/Background.h"
 #include "./Objects/Bullet.h"
 #include "./Hex/Hex.h"
+#include "./Objects/Pop.h"
 
 Background* bg;
 vector<Sprite*> sprites;
 vector<Bullet*> bullets;
+vector<Pop*> popAnim;
 Sprite* arrow;
 int nextnextColor;
 int nextColor;
@@ -40,12 +42,15 @@ void InitScene() {
 	nextColor = Math::Random(0, 7);
 	nextnextColor = Math::Random(0, 7);
 
+	//popAnim.push_back(new Pop(shaderFile, D3DXVECTOR2(100, 100), 2));
+
 	for (int i = 0; i < 8; i++) {
 		loaded[i] = new Bullet(shaderFile, D3DXVECTOR2(160, 31), 0.0f, 0.0f, i);
 		outbag[i] = new Bullet(shaderFile, D3DXVECTOR2(125, 16), 0.0f, 0.0f, i);
 	}
 
 	hmap = new HexMap(8, 12, D3DXVECTOR2(104, 192), D3DXVECTOR2(16, 14));
+	hmap->SetPopAnim(&popAnim);
 }
 
 void DestroyScene() {
@@ -78,9 +83,18 @@ void Update() {
 	D3DXMatrixLookAtLH(&V, &eye, &at, &up);
 
 	//Projection
-	D3DXMatrixOrthoOffCenterLH(&P, 0, (float)Width/3, 0, (float)Height/3, -1, 1);
+	D3DXMatrixOrthoOffCenterLH(&P, 0, (float)Width/4, 0, (float)Height/4, -1, 1);
 
 	bg->Update(V, P);
+
+	for (auto iter = popAnim.begin(); iter != popAnim.end();) {
+		if ((*iter)->Update(V, P)) {
+			iter = popAnim.erase(iter);
+		}
+		else {
+			++iter;
+		}
+	}
 
 	for (Sprite* sprite : sprites) {
 		sprite->Update(V, P);
@@ -135,6 +149,9 @@ void Render() {
 
 		for (Bullet* bullet : bullets)
 			bullet->Render();
+
+		for (Pop* pop : popAnim)
+			pop->Render();
 
 		hmap->Render();
 

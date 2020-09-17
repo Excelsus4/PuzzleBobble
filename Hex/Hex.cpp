@@ -50,8 +50,10 @@ void Hex::SetBullet(Bullet * b)
 	b->Stop();
 }
 
-void Hex::DestroyBullet()
+void Hex::DestroyBullet(vector<Pop*>* popAnim)
 {
+	if(bullet)
+		popAnim->push_back(new Pop(Shaders + L"008_Sprite.fx", bullet->Position(), bullet->Color()));
 	SAFE_DELETE(bullet);
 }
 
@@ -129,6 +131,11 @@ HexMap::~HexMap()
 	for (Hex* h : left) {
 		SAFE_DELETE(h);
 	}
+}
+
+void HexMap::SetPopAnim(vector<Pop*>* p)
+{
+	popAnim = p;
 }
 
 void HexMap::Update(D3DXMATRIX & V, D3DXMATRIX & P)
@@ -233,7 +240,7 @@ void HexMap::Destroy(Hex * start, const int & color)
 	if (start->bullet) {
 		// Bullet exist in start
 		if (start->bullet->Color() == color) {
-			start->DestroyBullet();
+			start->DestroyBullet(popAnim);
 
 			// Scan through the hexmap from startpoint
 			for (int i = 0; i < 6; i++) {
@@ -274,7 +281,7 @@ void HexMap::CleanUp()
 		Hex* c = left[i];
 		while (c) {
 			if (c->scanIndex < scanIndex)
-				c->DestroyBullet();
+				c->DestroyBullet(popAnim);
 			c = c->neighbor[Hex::three];
 		}
 	}

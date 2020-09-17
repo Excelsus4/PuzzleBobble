@@ -42,6 +42,9 @@
     <ClCompile Include="Hex\Hex.cpp">
       <Filter>Hex</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\Pop.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Systems\Keyboard.h">
@@ -83,6 +86,9 @@
     </ClInclude>
     <ClInclude Include="Hex\Hex.h">
       <Filter>Hex</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Pop.h">
+      <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

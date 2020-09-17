@@ -18,8 +18,10 @@ public:
 
 	void Stop();
 private:
+	float gCount;
+
 	D3DXVECTOR2 velocity;
-	Sprite* sprite;
+	Sprite* sprite[7];
 
 	D3DXVECTOR2 position;
 	int color;

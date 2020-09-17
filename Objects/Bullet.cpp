@@ -6,25 +6,31 @@ Bullet::Bullet(wstring shaderFile, D3DXVECTOR2 start, float angle, float speed, 
 {
 	float YIndex = 33 * (color % 4);
 	float XIndex = 554 * (color / 4);
-	sprite = new Sprite(Textures + L"PuzzleBobble/PuzzleBobble.png", shaderFile, 1 + XIndex, 1854 + YIndex, 17 + XIndex, 1870 + YIndex);
 
 	position = start;
-	sprite->Position(position);
+	for (int i = 0; i < 7; i++) {
+		sprite[i] = new Sprite(Textures + L"PuzzleBobble/PuzzleBobble.png", 
+			shaderFile, 1 + XIndex + i*17, 1854 + YIndex, 17 + XIndex + i*17, 1870 + YIndex);
+		sprite[i]->Position(position);
+	}
 
 	float radian = Math::ToRadian(angle);
 	velocity.x = sinf(radian);
 	velocity.y = cosf(radian);
 	velocity *= speed;
+
+	gCount = Math::Random(0.0f, 6.9f);
 }
 
 Bullet::~Bullet()
 {
-	SAFE_DELETE(sprite);
-
+	for(int i = 0; i < 7;i++)
+		SAFE_DELETE(sprite[i]);
 }
 
 void Bullet::Update(D3DXMATRIX & V, D3DXMATRIX & P)
 {
+	gCount = Math::Modulo(gCount + 0.003f, 7);
 	if (position.x < 104)
 		Reflection(D3DXVECTOR2(1, 0));
 	if (position.x > 216)
@@ -32,8 +38,8 @@ void Bullet::Update(D3DXMATRIX & V, D3DXMATRIX & P)
 
 	position += velocity;
 
-	sprite->Position(position);
-	sprite->Update(V, P);
+	sprite[(int)(gCount / 1)]->Position(position);
+	sprite[(int)(gCount / 1)]->Update(V, P);
 }
 
 void Bullet::Reflection(const D3DXVECTOR2 & n)
@@ -58,6 +64,6 @@ void Bullet::Stop()
 
 void Bullet::Render()
 {
-	sprite->Render();
+	sprite[(int)(gCount / 1)]->Render();
 }
 

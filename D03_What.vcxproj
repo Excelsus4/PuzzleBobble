@@ -149,6 +149,7 @@
     <ClCompile Include="Hex\Hex.cpp" />
     <ClCompile Include="Objects\Background.cpp" />
     <ClCompile Include="Objects\Bullet.cpp" />
+    <ClCompile Include="Objects\Pop.cpp" />
     <ClCompile Include="Renders\Shader.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -169,6 +170,7 @@
     <ClInclude Include="Hex\Hex.h" />
     <ClInclude Include="Objects\Background.h" />
     <ClInclude Include="Objects\Bullet.h" />
+    <ClInclude Include="Objects\Pop.h" />
     <ClInclude Include="Renders\Shader.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Systems\Device.h" />
