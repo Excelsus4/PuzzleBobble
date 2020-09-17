@@ -27,6 +27,8 @@ public:
 	void SetBullet(Bullet* b);
 	void DestroyBullet();
 	bool CollisionCheck(const Bullet& b);
+
+	void SetIndexToNearBullets(const UINT& index);
 };
 
 //-----------------------------------------------------------------------------
@@ -53,4 +55,5 @@ public:
 	int Scan(Hex* start, const int& color);
 	
 	void Destroy(Hex* start, const int& color);
+	void CleanUp();
 };

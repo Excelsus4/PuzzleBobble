@@ -68,6 +68,19 @@ bool Hex::CollisionCheck(const Bullet & b)
 	return false;
 }
 
+void Hex::SetIndexToNearBullets(const UINT & index)
+{
+	if (scanIndex >= index || bullet == nullptr)
+		return;
+	else {
+		scanIndex = index;
+		for (int i = 0; i < 6; i++) {
+			if(neighbor[i])
+				neighbor[i]->SetIndexToNearBullets(index);
+		}
+	}
+}
+
 //-----------------------------------------------------------------------------
 // HexMap
 //-----------------------------------------------------------------------------
@@ -239,5 +252,30 @@ void HexMap::Destroy(Hex * start, const int & color)
 	else {
 		// No Bullet in start
 		return;
+	}
+}
+
+void HexMap::CleanUp()
+{
+	//TODO: Scan thorugh the hexmap and remove any floating bubbles
+	++scanIndex;
+
+	// Refresh first line and all that connected to it 
+	{
+		Hex* c = left[0];
+		while (c) {
+			c->SetIndexToNearBullets(scanIndex);
+			c = c->neighbor[Hex::three];
+		}
+	}
+
+	//travel
+	for (size_t i = 1; i < left.size(); i++) {
+		Hex* c = left[i];
+		while (c) {
+			if (c->scanIndex < scanIndex)
+				c->DestroyBullet();
+			c = c->neighbor[Hex::three];
+		}
 	}
 }

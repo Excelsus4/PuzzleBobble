@@ -106,6 +106,7 @@ void Update() {
 			int sameColor = hmap->Scan(newBullet, newBullet->bullet->Color());
 			if (sameColor >= 3) {
 				hmap->Destroy(newBullet, newBullet->bullet->Color());
+				hmap->CleanUp();
 			}
 			
 			auto lazy = iter;
